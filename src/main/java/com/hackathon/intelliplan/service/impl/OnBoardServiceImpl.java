@@ -1,6 +1,9 @@
 package com.hackathon.intelliplan.service.impl;
 
 import com.hackathon.intelliplan.entity.OnBoard;
+import com.hackathon.intelliplan.entity.Template;
+import com.hackathon.intelliplan.entity.TemplateEntities;
+import com.hackathon.intelliplan.entity.Triggers;
 import com.hackathon.intelliplan.repository.IOnBoardRepository;
 import com.hackathon.intelliplan.service.IOnBoardService;
 import java.util.ArrayList;
@@ -22,9 +25,9 @@ import org.springframework.util.StringUtils;
 public class OnBoardServiceImpl implements IOnBoardService {
 
     private static final List<String> DEFAULT_PARAMS_TO_REMOVE = Arrays.asList("page", "size", "sortBy", "sortOrder", "fields");
-
     @Autowired
     IOnBoardRepository repository;
+    private TemplateEntities templateEntities;
 
     public static PageRequest constructPageRequest(final int page, final int size) {
         return new PageRequest(page, size);
@@ -100,6 +103,41 @@ public class OnBoardServiceImpl implements IOnBoardService {
     @Override
     public OnBoard findOne(String id) {
         return repository.findOne(id);
+    }
+
+    @Override
+    public List<String> getTemplateEntities(String template) {
+        List<String> entities = new ArrayList<>();
+        String templateValue = Template.valueOf(template.toUpperCase()).toString().toLowerCase();
+        switch (templateValue) {
+            case "construction":
+                entities = Arrays.asList(templateEntities.ASSET.toString(), templateEntities.TASK.toString(), templateEntities.PLANNING.toString(), templateEntities.WORKER.toString());
+                break;
+
+            case "finance":
+                entities = Arrays.asList(templateEntities.ASSET.toString(), templateEntities.TASK.toString(), templateEntities.CASHFLOW.toString(), templateEntities.EXPENSES.toString(),
+                        templateEntities.COMPANY.toString());
+                break;
+
+            case "mining":
+                entities = Arrays.asList(templateEntities.ASSET.toString(), templateEntities.TASK.toString(), templateEntities.PRODUCIVEMOVEMENT.toString(), templateEntities.CRUSHER.toString(),
+                        templateEntities.EQUIPMENT.toString());
+                break;
+
+            case "restaurant":
+                entities = Arrays.asList(templateEntities.ASSET.toString(), templateEntities.TASK.toString());
+                break;
+
+            default:
+                entities = Arrays.asList(templateEntities.ASSET.toString(), templateEntities.TASK.toString());
+                break;
+        }
+        return entities;
+    }
+
+    @Override
+    public List<String> getAllTriggers() {
+        return Arrays.asList(Triggers.values().toString());
     }
 
     private BoolQueryBuilder addFilters(Map<String, String[]> filters) {

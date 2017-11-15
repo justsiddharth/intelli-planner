@@ -24,8 +24,7 @@ public class ElasticsearchConfiguration {
 
     @Bean
     public Client client() {
-        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "elasticsearch_sjain").put("client.transport.ping_timeout", "60s").put("client.transport.nodes_sampler_interval",
-                "60s").build();
+        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "uptake").put("client.transport.ping_timeout", "60s").put("client.transport.nodes_sampler_interval", "60s").build();
         TransportClient client = new TransportClient(settings);
         TransportAddress address = new InetSocketTransportAddress(environment.getProperty("elasticsearch.host"), Integer.parseInt(environment.getProperty("elasticsearch.port")));
         client.addTransportAddress(address);

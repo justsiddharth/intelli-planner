@@ -16,8 +16,6 @@ public class OnBoard {
     @NotNull
     private String name;
 
-    private String projectId;
-
     private Template template;
 
     private List<TemplateEntities> entities;
@@ -26,6 +24,5 @@ public class OnBoard {
 
     private String ownedBy;
 
-    private Task ganttTask;
+    private List<GanttTask> ganttTask;
 }
-

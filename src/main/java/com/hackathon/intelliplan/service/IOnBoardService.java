@@ -1,6 +1,7 @@
 package com.hackathon.intelliplan.service;
 
 import com.hackathon.intelliplan.entity.OnBoard;
+import java.util.List;
 import java.util.Map;
 import org.springframework.data.domain.Page;
 
@@ -21,5 +22,9 @@ public interface IOnBoardService {
     void update(String id, OnBoard resource);
 
     OnBoard findOne(String id);
+
+    List<String> getTemplateEntities(String template);
+
+    List<String> getAllTriggers();
 }
 

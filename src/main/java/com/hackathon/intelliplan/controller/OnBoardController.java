@@ -46,6 +46,22 @@ public class OnBoardController {
         return service.count();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getTemplateEntity/{template}")
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Template Entities OnBoarding", notes = "Get the entities for a particular entity")
+    public List<String> getTemplateEntities(@PathVariable("template") @ApiParam(value = "The template to retrieve entities for.") final String template) {
+        return service.getTemplateEntities(template);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getAllTriggers")
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    @ApiOperation(value = "Template Trigger OnBoarding", notes = "Get all triggers")
+    public List<String> getTemplateEntities() {
+        return service.getAllTriggers();
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create OnBoarding", notes = "Create a new OnBoarding Request")
